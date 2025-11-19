@@ -17,11 +17,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Kyverno CLI
-        run: |
-          curl -LO https://github.com/kyverno/kyverno/releases/download/latest/kyverno-cli-linux.tar.gz
-          tar -xzf kyverno-cli-linux.tar.gz
-          sudo mv kyverno /usr/local/bin/
-
+        steps:
+          - name: Install kyverno CLI
+            uses: kyverno/action-install-cli@v0.2.0
+            with:
+              release: 'v1.9.5'
+          - name: check install
+            run: kyverno version
+            
       - name: Run Kyverno Policy Checks
         run: |
           kyverno apply -f .github/kyverno_policies/ -r eks-sample-app/
