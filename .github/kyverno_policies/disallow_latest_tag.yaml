@@ -1,0 +1,35 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: disallow-latest-tag
+  annotations:
+    policies.kyverno.io/title: Disallow Latest Tag
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Mutable tags, like 'latest', can lead to unexpected errors if the
+      image changes. This policy validates that images in Pods, Deployments,
+      StatefulSets, DaemonSets, and Jobs do not use the 'latest' tag.
+spec:
+  validationFailureAction: Enforce
+  rules:
+  - name: validate-image-tag
+    match:
+      any:
+      - resources:
+          kinds:
+            - Pod
+            - Deployment
+            - StatefulSet
+            - DaemonSet
+            - Job
+    validate:
+      message: "Using a mutable image tag like 'latest' is not allowed. Please use a specific, immutable tag."
+      pattern:
+        spec:
+          containers:
+            - image: "!*:latest"
+          initContainers:
+            - image: "!*:latest"
+          ephemeralContainers:
+            - image: "!*:latest"
