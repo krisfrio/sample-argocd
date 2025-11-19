@@ -1,0 +1,23 @@
+name: CI Pipeline with Kyverno Policy Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  kyverno-policy-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Install Kyverno CLI
+        run: |
+          curl -LO https://github.com/kyverno/kyverno/releases/download/latest/kyverno-cli-linux.tar.gz
+          tar -xzf kyverno-cli-linux.tar.gz
+          sudo mv kyverno /usr/local/bin/
