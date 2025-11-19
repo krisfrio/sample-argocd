@@ -17,13 +17,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Install Kyverno CLI
-        steps:
-          - name: Install kyverno CLI
-            uses: kyverno/action-install-cli@v0.2.0
-            with:
-              release: 'v1.9.5'
-          - name: check install
-            run: kyverno version
+        uses: kyverno/action-install-cli@v0.2.0
+        with:
+          release: 'v1.9.5'
+          
+      - name: check install
+        run: kyverno version
             
       - name: Run Kyverno Policy Checks
         run: |
