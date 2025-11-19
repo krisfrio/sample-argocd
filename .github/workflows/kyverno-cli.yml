@@ -21,3 +21,7 @@ jobs:
           curl -LO https://github.com/kyverno/kyverno/releases/download/latest/kyverno-cli-linux.tar.gz
           tar -xzf kyverno-cli-linux.tar.gz
           sudo mv kyverno /usr/local/bin/
+
+      - name: Run Kyverno Policy Checks
+        run: |
+          kyverno apply -f .github/kyverno_policies/ -r eks-sample-app/
