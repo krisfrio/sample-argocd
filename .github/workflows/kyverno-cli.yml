@@ -26,4 +26,4 @@ jobs:
             
       - name: Run Kyverno Policy Checks
         run: |
-          kyverno apply  .github/kyverno_policies/disallow_latest_tag.yaml .github/kyverno_policies/requires-pod-requests-limits.yaml -r eks-sample-app/
+          kyverno apply  .github/kyverno_policies/disallow_latest_tag.yaml .github/kyverno_policies/requires-pod-requests-limits.yaml -r eks-sample-app/eks-sample-linux-deployment.yaml
